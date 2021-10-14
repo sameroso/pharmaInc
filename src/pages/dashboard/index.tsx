@@ -1,17 +1,24 @@
 import Table from "components/Table";
 import { BsSearch } from "react-icons/bs";
 import { tableColumns } from "./tableColumns";
-import { mock } from "./mock";
-
+import { getRandomUser } from "api/axios/randomUser";
+import { useEffect, useState } from "react";
 export function DashBoard() {
-  return (
-    <Table data={mock.results}>
+  const [users, setUsers] = useState<any>();
+  useEffect(() => {
+    async function getUsers() {
+      const response = await getRandomUser({ gender: "" });
+      setUsers(response.data);
+    }
+    getUsers();
+  }, []);
+  return users?.results?.length > 0 ? (
+    <Table data={users.results}>
       {
         tableColumns.map((item) => (
           <Table.Column
             itemKey={item.field}
             key={item.field}
-            
             field={item.field}
             modifier={item.modifier}
           >
@@ -37,5 +44,7 @@ export function DashBoard() {
         itemKey="1212"
       />
     </Table>
+  ) : (
+    <></>
   );
 }
