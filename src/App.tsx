@@ -2,7 +2,7 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 // Pages
-import { DashBoard } from "pages/Dashboard";
+import { DashBoard } from "pages/dashboard";
 
 function App() {
   return (
