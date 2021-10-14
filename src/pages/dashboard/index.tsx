@@ -7,6 +7,8 @@ import { Results } from "types/models/user";
 import { AiOutlineReload } from "react-icons/ai";
 import { useHistory } from "react-router";
 import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
+import ReactPaginate from "react-paginate";
+import "./style.css";
 
 export function DashBoard() {
   const [users, setUsers] = useState<any>();
@@ -26,7 +28,7 @@ export function DashBoard() {
   }
 
   useEffect(() => {
-    getUsers({ page: Number(urlSearchParamsHelper.getParam("page")) });
+    getUsers({ page: Number(urlSearchParamsHelper.getParam("page")) || 1 });
   }, [urlSearchParamsHelper]);
 
   function handleSearchClick(value: any) {
@@ -38,7 +40,7 @@ export function DashBoard() {
     const page = Number(urlSearchParamsHelper.getParam("page"));
     const urlSearchParam = urlSearchParamsHelper.addOrReplaceParam({
       key: "page",
-      value: `${page + 1}`,
+      value: `${page ? page + 1 : 2}`,
     }).urlSearchParamsString;
     history.push(`?${urlSearchParam}`);
   }
@@ -51,13 +53,37 @@ export function DashBoard() {
             handleSearchClick={handleSearchClick}
             data={users.results}
           />
-          <div
-            className="d-flex align-items-center justify-content-center"
-            onClick={handleLoadMore}
-            style={{ cursor: "pointer" }}
-          >
-            <AiOutlineReload size="40px" />
-            <h3>Loading More</h3>
+          <div className="d-flex align-items-center justify-content-center">
+            <div onClick={handleLoadMore} style={{ cursor: "pointer" }}>
+              <AiOutlineReload size="40px" />
+              <h3>Loading More</h3>
+            </div>
+          </div>
+          <div>
+            <ReactPaginate
+              previousLabel={"prev"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={window.screen.width <= 400 ? 10 : 50}
+              marginPagesDisplayed={2}
+              disableInitialCallback
+              forcePage={
+                Number(urlSearchParamsHelper.getParam("page"))
+                  ? Number(urlSearchParamsHelper.getParam("page")) - 1
+                  : 0
+              }
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+              pageRangeDisplayed={5}
+              onPageChange={(selectedPage) => {
+                const urlSearchParam = urlSearchParamsHelper.addOrReplaceParam({
+                  key: "page",
+                  value: `${selectedPage.selected + 1}`,
+                }).urlSearchParamsString;
+                history.push(`?${urlSearchParam}`);
+              }}
+            />
           </div>
         </>
       ) : (
