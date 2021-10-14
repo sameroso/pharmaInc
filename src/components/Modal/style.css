@@ -23,10 +23,10 @@
 }
 
 .modal-content {
-  width: 75% !important;
+  width: 80% !important;
   background-color: #fff;
   transition: all 0.3s ease-in-out;
-  transform: translateY(-200px);
+  transform: translateY(-500px);
   pointer-events: none !important;
 }
 
