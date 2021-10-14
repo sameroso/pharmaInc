@@ -1,21 +1,24 @@
-import { getRandomUser } from "api/axios/randomUser";
+import { getRandomUser, RadomUserProps } from "api/axios/randomUser";
 import { useEffect, useState } from "react";
 import Modal from "components/Modal";
 import { ModalContent } from "./parts/ModalContent";
 import { DashboardTable } from "./parts/Table";
 import { Results } from "types/models/user";
+import { AiOutlineReload } from "react-icons/ai";
 
 export function DashBoard() {
   const [users, setUsers] = useState<any>();
   const [selectedUser, setSelectedUser] = useState<Results>();
   const [show, setShow] = useState(false);
+  const [page, setPage] = useState(1);
+
+  async function getUsers({ gender, page }: RadomUserProps) {
+    const response = await getRandomUser({ gender, page });
+    setUsers(response.data);
+  }
 
   useEffect(() => {
-    async function getUsers() {
-      const response = await getRandomUser({ gender: "" });
-      setUsers(response.data);
-    }
-    getUsers();
+    getUsers({ page: 1 });
   }, []);
 
   function handleSearchClick(value: any) {
@@ -23,13 +26,28 @@ export function DashBoard() {
     setSelectedUser(value);
   }
 
+  function handleLoadMore() {
+    getUsers({ page: page + 1 });
+    setPage((prev) => prev + 1);
+  }
+
   return (
     <>
       {users?.results?.length > 0 ? (
-        <DashboardTable
-          handleSearchClick={handleSearchClick}
-          data={users.results}
-        />
+        <>
+          <DashboardTable
+            handleSearchClick={handleSearchClick}
+            data={users.results}
+          />
+          <div
+            className="d-flex align-items-center justify-content-center"
+            onClick={handleLoadMore}
+            style={{ cursor: "pointer" }}
+          >
+            <AiOutlineReload size="40px" />
+            <h3>Loading More</h3>
+          </div>
+        </>
       ) : (
         <></>
       )}
