@@ -1,9 +1,10 @@
 // Packages
-import RenderableType from "types/renderable";
 import { useState, useEffect } from "react";
 
 // Interfaces
-import { ContainerComponent } from "../types";
+import RenderableType from "types/renderable";
+import Column from "./Column";
+import Extra from "./Extra";
 import { ContainerProps, ColumnProps, ExtraProps } from "../types";
 
 function Container(props: ContainerProps) {
@@ -133,7 +134,7 @@ function Container(props: ContainerProps) {
       for (let i = 0; i < columnData.length; i += 1, pos += 1) {
         const header = columnData[i] as ColumnProps;
         const modified = header.modifier
-          ? header.modifier(row[header.field], row)
+          ? header.modifier(row[header.field])
           : (row[header.field] as RenderableType);
 
         rowResponse.push(
@@ -184,4 +185,7 @@ function Container(props: ContainerProps) {
   );
 }
 
-export default Container as ContainerComponent;
+Container.Column = Column;
+Container.Extra = Extra;
+
+export default Container;
