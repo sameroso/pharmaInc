@@ -1,16 +1,24 @@
 import { getRandomUser, RadomUserProps } from "api/axios/randomUser";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Modal from "components/Modal";
 import { ModalContent } from "./parts/ModalContent";
 import { DashboardTable } from "./parts/Table";
 import { Results } from "types/models/user";
 import { AiOutlineReload } from "react-icons/ai";
+import { useHistory } from "react-router";
+import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
 
 export function DashBoard() {
   const [users, setUsers] = useState<any>();
   const [selectedUser, setSelectedUser] = useState<Results>();
   const [show, setShow] = useState(false);
-  const [page, setPage] = useState(1);
+  const history = useHistory();
+
+  const urlSearchParamsHelper = useMemo(
+    () =>
+      UrlSearchParamsHelper.create<{ page: string }>(history.location.search),
+    [history.location.search]
+  );
 
   async function getUsers({ gender, page }: RadomUserProps) {
     const response = await getRandomUser({ gender, page });
@@ -18,8 +26,8 @@ export function DashBoard() {
   }
 
   useEffect(() => {
-    getUsers({ page: 1 });
-  }, []);
+    getUsers({ page: Number(urlSearchParamsHelper.getParam("page")) });
+  }, [urlSearchParamsHelper]);
 
   function handleSearchClick(value: any) {
     setShow(true);
@@ -27,8 +35,12 @@ export function DashBoard() {
   }
 
   function handleLoadMore() {
-    getUsers({ page: page + 1 });
-    setPage((prev) => prev + 1);
+    const page = Number(urlSearchParamsHelper.getParam("page"));
+    const urlSearchParam = urlSearchParamsHelper.addOrReplaceParam({
+      key: "page",
+      value: `${page + 1}`,
+    }).urlSearchParamsString;
+    history.push(`?${urlSearchParam}`);
   }
 
   return (
