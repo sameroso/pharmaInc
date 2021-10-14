@@ -1,8 +1,16 @@
 import { useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./style.css";
+import { AiOutlineClose } from "react-icons/ai";
 
-const Modal = (props: any) => {
+interface Props {
+  onClose: () => void;
+  title: string | JSX.Element | JSX.Element[];
+  children: string | JSX.Element | JSX.Element[];
+  show: boolean;
+}
+
+const Modal = (props: Props) => {
   const closeOnEscapeKeyDown = (e: any) => {
     if ((e.charCode || e.keyCode) === 27) {
       props.onClose();
@@ -22,15 +30,18 @@ const Modal = (props: any) => {
       onClick={props.onClose}
     >
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <AiOutlineClose
+          onClick={props.onClose}
+          cursor="pointer"
+          size="20px"
+          style={{ right: "0.8rem", top: "0.8rem", position: "absolute" }}
+        />
+
         <div className="modal-header">
-          <h4 className="modal-title">{props.title}</h4>
+          <h4 className="modal-title w-100">{props.title}</h4>
         </div>
         <div className="modal-body">{props.children}</div>
-        <div className="modal-footer">
-          <button onClick={props.onClose} className="button">
-            Close
-          </button>
-        </div>
+        <div className="modal-footer"></div>
       </div>
     </div>,
     document.getElementById("modal") as HTMLElement

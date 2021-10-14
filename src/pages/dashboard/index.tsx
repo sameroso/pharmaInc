@@ -4,8 +4,12 @@ import { tableColumns } from "./tableColumns";
 import { getRandomUser } from "api/axios/randomUser";
 import { useEffect, useState } from "react";
 import Modal from "components/Modal";
+import { ModalContent } from "./parts/ModalContent";
+import { Results } from "types/models/user";
+
 export function DashBoard() {
   const [users, setUsers] = useState<any>();
+  const [selectedUser, setSelectedUser] = useState<Results>();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -15,6 +19,12 @@ export function DashBoard() {
     }
     getUsers();
   }, []);
+
+  function handleSearchClick(value: any) {
+    setShow(true);
+    setSelectedUser(value);
+  }
+
   return (
     <>
       {users?.results?.length > 0 ? (
@@ -41,7 +51,7 @@ export function DashBoard() {
                     className="cursor-pointer"
                     data-bs-toggle="tooltip"
                     title="Detalhes"
-                    onClick={() => setShow(true)}
+                    onClick={() => handleSearchClick(value)}
                   />
                 </div>
               );
@@ -52,17 +62,27 @@ export function DashBoard() {
       ) : (
         <></>
       )}
-      <Modal title="samer" onClose={() => setShow(false)} show={show}>
-        <div>oi</div>
-        <div>oi</div>
-        <div>oi</div>
-        <div>oi</div>
-        <div>oi</div>
-        <div>oi</div>
-        <div>oi</div>
-        <div>oi</div>
-        <div>oi</div>
-        <div>oi</div>
+      <Modal
+        title={
+          <div>
+            <h2 className="text-center mt-5"> {selectedUser?.name.first} {selectedUser?.name.last}</h2>
+            <img
+              alt="User"
+              className="rounded-circle border"
+              style={{
+                position: "absolute",
+                transform: "translate(-50%,-140%)",
+                boxShadow: "1px 1px #888888",
+                left: "50%",
+              }}
+              src={selectedUser?.picture.large}
+            />
+          </div>
+        }
+        onClose={() => setShow(false)}
+        show={show}
+      >
+        <ModalContent data={selectedUser} />
       </Modal>
     </>
   );
