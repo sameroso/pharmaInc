@@ -1,10 +1,8 @@
-import Table from "components/Table";
-import { BsSearch } from "react-icons/bs";
-import { tableColumns } from "./tableColumns";
 import { getRandomUser } from "api/axios/randomUser";
 import { useEffect, useState } from "react";
 import Modal from "components/Modal";
 import { ModalContent } from "./parts/ModalContent";
+import { DashboardTable } from "./parts/Table";
 import { Results } from "types/models/user";
 
 export function DashBoard() {
@@ -28,44 +26,19 @@ export function DashBoard() {
   return (
     <>
       {users?.results?.length > 0 ? (
-        <Table data={users.results}>
-          {
-            tableColumns.map((item) => (
-              <Table.Column
-                itemKey={item.field}
-                key={item.field}
-                field={item.field}
-                modifier={item.modifier}
-              >
-                {item.header}
-              </Table.Column>
-            )) as any
-          }
-          <Table.Extra
-            field="Ações"
-            callback={(value) => {
-              return (
-                <div>
-                  <BsSearch
-                    cursor="pointer"
-                    className="cursor-pointer"
-                    data-bs-toggle="tooltip"
-                    title="Detalhes"
-                    onClick={() => handleSearchClick(value)}
-                  />
-                </div>
-              );
-            }}
-            itemKey="1212"
-          />
-        </Table>
+        <DashboardTable
+          handleSearchClick={handleSearchClick}
+          data={users.results}
+        />
       ) : (
         <></>
       )}
       <Modal
         title={
           <div>
-            <h2 className="text-center mt-5"> {selectedUser?.name.first} {selectedUser?.name.last}</h2>
+            <h2 className="text-center mt-5">
+              {selectedUser?.name.first} {selectedUser?.name.last}
+            </h2>
             <img
               alt="User"
               className="rounded-circle border"
