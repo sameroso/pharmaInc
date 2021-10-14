@@ -3,15 +3,17 @@ import { useEffect, useMemo, useState } from "react";
 import Modal from "components/Modal";
 import { ModalContent } from "./parts/ModalContent";
 import { DashboardTable } from "./parts/Table";
-import { Results } from "types/models/user";
+import { Results, Users } from "types/models/user";
 import { AiOutlineReload } from "react-icons/ai";
+import { FaSearch } from "react-icons/fa";
 import { useHistory } from "react-router";
 import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
 import ReactPaginate from "react-paginate";
 import "./style.css";
 
 export function DashBoard() {
-  const [users, setUsers] = useState<any>();
+  const [users, setUsers] = useState<Users>();
+  const [searchInputValue, setSearchInputValue] = useState("");
   const [selectedUser, setSelectedUser] = useState<Results>();
   const [show, setShow] = useState(false);
   const history = useHistory();
@@ -45,13 +47,38 @@ export function DashBoard() {
     history.push(`?${urlSearchParam}`);
   }
 
+  function filterValues(value: string) {
+    return users?.results.filter(
+      (item) =>
+        `${item.name.first.toLocaleLowerCase()} ${item.name.last.toLocaleLowerCase()}`.includes(
+          value.toLocaleLowerCase()
+        ) || `${item.nat.toLocaleLowerCase()}`.includes(value.toLowerCase())
+    );
+  }
+
   return (
     <>
-      {users?.results?.length > 0 ? (
+      {users && users?.results?.length > 0 ? (
         <>
+          <div className="w-75 m-auto my-4 position-relative">
+            <label
+              htmlFor="searchInput"
+              style={{ right: "10px", position: "absolute" }}
+            >
+              <FaSearch cursor="pointer" />
+            </label>
+            <input
+              onChange={(e) => setSearchInputValue(e.target.value)}
+              id="searchInput"
+              className="w-100"
+              style={{ paddingRight: "10px" }}
+            />
+          </div>
           <DashboardTable
             handleSearchClick={handleSearchClick}
-            data={users.results}
+            data={
+              searchInputValue ? filterValues(searchInputValue) : users.results
+            }
           />
           <div className="d-flex align-items-center justify-content-center">
             <div onClick={handleLoadMore} style={{ cursor: "pointer" }}>
