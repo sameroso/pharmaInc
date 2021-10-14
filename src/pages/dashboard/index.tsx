@@ -65,7 +65,7 @@ export function DashBoard() {
               nextLabel={"next"}
               breakLabel={"..."}
               breakClassName={"break-me"}
-              pageCount={window.screen.width <= 400 ? 10 : 50}
+              pageCount={50}
               marginPagesDisplayed={2}
               disableInitialCallback
               forcePage={
