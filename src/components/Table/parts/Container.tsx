@@ -1,5 +1,5 @@
 // Packages
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 // Interfaces
 import RenderableType from "types/renderable";
@@ -35,6 +35,14 @@ function Container(props: ContainerProps) {
       // Find columns array
       if (Array.isArray(elements)) {
         elements.forEach((element) => {
+          if (element?.type?.type === "column") {
+            columns.push(element.props);
+          }
+        });
+      }
+
+      if (elements.type === React.Fragment && elements.props?.children) {
+        elements.props?.children.forEach((element: any) => {
           if (element?.type?.type === "column") {
             columns.push(element.props);
           }
