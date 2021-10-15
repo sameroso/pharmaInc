@@ -4,7 +4,6 @@ import { Modal, Pagination, SearchInput, LoadMore } from "components";
 import { ModalContent } from "./parts/ModalContent";
 import { DashboardTable } from "./parts/Table";
 import { Results, Users } from "types/models/user";
-import { AiOutlineReload } from "react-icons/ai";
 import { useHistory } from "react-router";
 import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
 
@@ -38,6 +37,7 @@ export function DashBoard() {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [selectedUser, setSelectedUser] = useState<Results>();
   const [show, setShow] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
 
   const urlSearchParamsHelper = useMemo(
@@ -48,8 +48,16 @@ export function DashBoard() {
 
   useEffect(() => {
     async function getUsers({ gender, page }: RadomUserProps) {
-      const response = await getRandomUser({ gender, page });
-      setUsers(response.data);
+      try {
+        setIsLoading(true);
+        const response = await getRandomUser({ gender, page });
+        setIsLoading(false);
+        setUsers(response.data);
+      } catch (error) {
+        setIsLoading(false);
+        setUsers(undefined);
+        console.log(error);
+      }
     }
     getUsers({ page: Number(urlSearchParamsHelper.getParam("page")) || 1 });
   }, [urlSearchParamsHelper]);
@@ -78,13 +86,13 @@ export function DashBoard() {
 
   return (
     <>
+      <SearchInput
+        className="w-75 m-auto my-4"
+        id="searchInput"
+        onChange={(value) => setSearchInputValue(value)}
+      />
       {users && users?.results?.length > 0 ? (
         <>
-          <SearchInput
-            className="w-75 m-auto my-4"
-            id="searchInput"
-            onChange={(value) => setSearchInputValue(value)}
-          />
           <DashboardTable
             handleSearchClick={handleSearchClick}
             data={
@@ -92,14 +100,7 @@ export function DashBoard() {
             }
           />
           <div className="d-flex align-items-center justify-content-center">
-            <LoadMore
-              onClick={() =>
-                handleLoadUserList({
-                  page:
-                    (Number(urlSearchParamsHelper.getParam("page")) || 1) + 1,
-                })
-              }
-            />
+            <LoadMore isLoading={isLoading} />
           </div>
           <div>
             <Pagination
