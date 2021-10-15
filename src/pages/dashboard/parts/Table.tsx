@@ -1,4 +1,4 @@
-import Table from "components/Table";
+import { Table } from "components";
 import { BsSearch } from "react-icons/bs";
 import { tableColumns } from "./tableColumns";
 

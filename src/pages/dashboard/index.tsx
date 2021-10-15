@@ -1,15 +1,37 @@
 import { getRandomUser, RadomUserProps } from "api/axios/randomUser";
 import { useEffect, useMemo, useState } from "react";
-import Modal from "components/Modal";
+import { Modal, Pagination, SearchInput, LoadMore } from "components";
 import { ModalContent } from "./parts/ModalContent";
 import { DashboardTable } from "./parts/Table";
 import { Results, Users } from "types/models/user";
 import { AiOutlineReload } from "react-icons/ai";
-import { FaSearch } from "react-icons/fa";
 import { useHistory } from "react-router";
 import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
-import ReactPaginate from "react-paginate";
-import "./style.css";
+
+interface ModalTitleProps {
+  selectedUser: Results | undefined;
+}
+
+function ModalTitle({ selectedUser }: ModalTitleProps) {
+  return (
+    <div>
+      <h2 className="text-center mt-5">
+        {selectedUser?.name.first} {selectedUser?.name.last}
+      </h2>
+      <img
+        alt="User"
+        className="rounded-circle border"
+        style={{
+          position: "absolute",
+          transform: "translate(-50%,-140%)",
+          boxShadow: "1px 1px #888888",
+          left: "50%",
+        }}
+        src={selectedUser?.picture.large}
+      />
+    </div>
+  );
+}
 
 export function DashBoard() {
   const [users, setUsers] = useState<Users>();
@@ -24,25 +46,23 @@ export function DashBoard() {
     [history.location.search]
   );
 
-  async function getUsers({ gender, page }: RadomUserProps) {
-    const response = await getRandomUser({ gender, page });
-    setUsers(response.data);
-  }
-
   useEffect(() => {
+    async function getUsers({ gender, page }: RadomUserProps) {
+      const response = await getRandomUser({ gender, page });
+      setUsers(response.data);
+    }
     getUsers({ page: Number(urlSearchParamsHelper.getParam("page")) || 1 });
   }, [urlSearchParamsHelper]);
 
   function handleSearchClick(value: any) {
-    setShow(true);
     setSelectedUser(value);
+    setShow(true);
   }
 
-  function handleLoadMore() {
-    const page = Number(urlSearchParamsHelper.getParam("page"));
+  function handleLoadUserList({ page }: { page: string | number }) {
     const urlSearchParam = urlSearchParamsHelper.addOrReplaceParam({
       key: "page",
-      value: `${page ? page + 1 : 2}`,
+      value: typeof page === "string" ? page : page.toString(),
     }).urlSearchParamsString;
     history.push(`?${urlSearchParam}`);
   }
@@ -60,20 +80,11 @@ export function DashBoard() {
     <>
       {users && users?.results?.length > 0 ? (
         <>
-          <div className="w-75 m-auto my-4 position-relative">
-            <label
-              htmlFor="searchInput"
-              style={{ right: "10px", position: "absolute" }}
-            >
-              <FaSearch cursor="pointer" />
-            </label>
-            <input
-              onChange={(e) => setSearchInputValue(e.target.value)}
-              id="searchInput"
-              className="w-100"
-              style={{ paddingRight: "10px" }}
-            />
-          </div>
+          <SearchInput
+            className="w-75 m-auto my-4"
+            id="searchInput"
+            onChange={(value) => setSearchInputValue(value)}
+          />
           <DashboardTable
             handleSearchClick={handleSearchClick}
             data={
@@ -81,35 +92,28 @@ export function DashBoard() {
             }
           />
           <div className="d-flex align-items-center justify-content-center">
-            <div onClick={handleLoadMore} style={{ cursor: "pointer" }}>
-              <AiOutlineReload size="40px" />
-              <h3>Loading More</h3>
-            </div>
+            <LoadMore
+              onClick={() =>
+                handleLoadUserList({
+                  page:
+                    (Number(urlSearchParamsHelper.getParam("page")) || 1) + 1,
+                })
+              }
+            />
           </div>
           <div>
-            <ReactPaginate
-              previousLabel={"prev"}
-              nextLabel={"next"}
-              breakLabel={"..."}
-              breakClassName={"break-me"}
-              pageCount={50}
-              marginPagesDisplayed={2}
-              disableInitialCallback
-              forcePage={
+            <Pagination
+              activePage={
                 Number(urlSearchParamsHelper.getParam("page"))
-                  ? Number(urlSearchParamsHelper.getParam("page")) - 1
-                  : 0
+                  ? Number(urlSearchParamsHelper.getParam("page"))
+                  : 1
               }
-              containerClassName={"pagination"}
-              activeClassName={"active"}
-              pageRangeDisplayed={5}
-              onPageChange={(selectedPage) => {
-                const urlSearchParam = urlSearchParamsHelper.addOrReplaceParam({
-                  key: "page",
-                  value: `${selectedPage.selected + 1}`,
-                }).urlSearchParamsString;
-                history.push(`?${urlSearchParam}`);
+              marginPagesDisplayed={2}
+              onPageChange={({ selected }) => {
+                handleLoadUserList({ page: selected + 1 });
               }}
+              pageCount={50}
+              pageRangeDisplayed={5}
             />
           </div>
         </>
@@ -117,24 +121,7 @@ export function DashBoard() {
         <></>
       )}
       <Modal
-        title={
-          <div>
-            <h2 className="text-center mt-5">
-              {selectedUser?.name.first} {selectedUser?.name.last}
-            </h2>
-            <img
-              alt="User"
-              className="rounded-circle border"
-              style={{
-                position: "absolute",
-                transform: "translate(-50%,-140%)",
-                boxShadow: "1px 1px #888888",
-                left: "50%",
-              }}
-              src={selectedUser?.picture.large}
-            />
-          </div>
-        }
+        title={<ModalTitle selectedUser={selectedUser} />}
         onClose={() => setShow(false)}
         show={show}
       >
