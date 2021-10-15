@@ -26,7 +26,7 @@ export function DashboardTable({ data, handleSearchClick }: any) {
                 cursor="pointer"
                 className="cursor-pointer"
                 data-bs-toggle="tooltip"
-                title="Detalhes"
+                title="Details"
                 onClick={() => handleSearchClick(value)}
               />
             </div>
