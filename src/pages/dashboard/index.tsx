@@ -1,10 +1,12 @@
 import { getRandomUser, RadomUserProps } from "api/axios/randomUser";
 import { useEffect, useMemo, useState } from "react";
 import {
-  useError,
-  ErrorContainerHandler,
-} from "components/ErrorContainerHandler";
-import { Modal, Pagination, SearchInput, LoadMore } from "components";
+  Modal,
+  Pagination,
+  SearchInput,
+  LoadMore,
+  ErrorModule,
+} from "components";
 import { ModalContent } from "./parts/ModalContent";
 import { DashboardTable } from "./parts/Table";
 import { Results, Users } from "types/models/user";
@@ -42,6 +44,8 @@ export function DashBoard() {
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
+
+  const { useError } = ErrorModule;
   const { addError, removeError } = useError();
 
   const urlSearchParamsHelper = useMemo(
@@ -89,7 +93,7 @@ export function DashBoard() {
   }
 
   return (
-    <ErrorContainerHandler>
+    <ErrorModule.ErrorContainerHandler>
       <>
         {users && users?.results?.length > 0 ? (
           <>
@@ -136,6 +140,6 @@ export function DashBoard() {
           <ModalContent data={selectedUser} />
         </Modal>
       </>
-    </ErrorContainerHandler>
+    </ErrorModule.ErrorContainerHandler>
   );
 }

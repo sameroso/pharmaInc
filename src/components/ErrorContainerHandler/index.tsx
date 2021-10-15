@@ -1,5 +1,5 @@
 import { useContext, createContext, useState, useCallback } from "react";
-import { Error as ErrorComponent } from "components/Error";
+import { ErrorComponent } from "components";
 
 interface IErrorContext {
   addError: () => void;

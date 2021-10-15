@@ -3,6 +3,15 @@ import Table from "components/Table";
 import SearchInput from "./SearchInput";
 import Pagination from "./Pagination";
 import LoadMore from "./LoadMore";
-import { Error } from "./Error";
+import ErrorComponent from "./Error";
+import * as ErrorModule from "./ErrorContainerHandler";
 
-export { Modal, Table, SearchInput, Pagination, LoadMore, Error };
+export {
+  Modal,
+  Table,
+  SearchInput,
+  Pagination,
+  LoadMore,
+  ErrorComponent,
+  ErrorModule,
+};

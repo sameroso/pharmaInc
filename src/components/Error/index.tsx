@@ -2,7 +2,7 @@ import errorIcon from "assets/img/error.png";
 
 import { useHistory } from "react-router-dom";
 
-export function Error() {
+export default function ErrorComponent() {
   const history = useHistory();
   return (
     <div

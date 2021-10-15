@@ -1,6 +1,6 @@
 // Packages
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { ErrorContainerProvider } from "components/ErrorContainerHandler";
+import { ErrorModule } from "components";
 
 // Pages
 import { DashBoard } from "pages/dashboard";
@@ -9,9 +9,9 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <ErrorContainerProvider>
+        <ErrorModule.ErrorContainerProvider>
           <Route path="/" component={DashBoard} />
-        </ErrorContainerProvider>
+        </ErrorModule.ErrorContainerProvider>
       </Switch>
     </BrowserRouter>
   );
