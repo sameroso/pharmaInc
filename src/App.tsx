@@ -1,6 +1,6 @@
 // Packages
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { ErrorModule } from "components";
+import { ErrorModule, Header } from "components";
 
 // Pages
 import { DashBoard } from "pages/dashboard";
@@ -8,6 +8,7 @@ import { DashBoard } from "pages/dashboard";
 function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Switch>
         <ErrorModule.ErrorContainerProvider>
           <Route path="/" component={DashBoard} />
