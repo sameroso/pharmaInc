@@ -1,12 +1,15 @@
 import { getRandomUser, RadomUserProps } from "api/axios/randomUser";
 import { useEffect, useMemo, useState } from "react";
+import {
+  useError,
+  ErrorContainerHandler,
+} from "components/ErrorContainerHandler";
 import { Modal, Pagination, SearchInput, LoadMore } from "components";
 import { ModalContent } from "./parts/ModalContent";
 import { DashboardTable } from "./parts/Table";
 import { Results, Users } from "types/models/user";
 import { useHistory } from "react-router";
 import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
-
 interface ModalTitleProps {
   selectedUser: Results | undefined;
 }
@@ -39,6 +42,7 @@ export function DashBoard() {
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
+  const { addError, removeError } = useError();
 
   const urlSearchParamsHelper = useMemo(
     () =>
@@ -52,15 +56,15 @@ export function DashBoard() {
         setIsLoading(true);
         const response = await getRandomUser({ gender, page });
         setIsLoading(false);
+        removeError();
         setUsers(response.data);
       } catch (error) {
         setIsLoading(false);
-        setUsers(undefined);
-        console.log(error);
+        addError();
       }
     }
     getUsers({ page: Number(urlSearchParamsHelper.getParam("page")) || 1 });
-  }, [urlSearchParamsHelper]);
+  }, [addError, removeError, urlSearchParamsHelper]);
 
   function handleSearchClick(value: any) {
     setSelectedUser(value);
@@ -85,49 +89,53 @@ export function DashBoard() {
   }
 
   return (
-    <>
-      <SearchInput
-        className="w-75 m-auto my-4"
-        id="searchInput"
-        onChange={(value) => setSearchInputValue(value)}
-      />
-      {users && users?.results?.length > 0 ? (
-        <>
-          <DashboardTable
-            handleSearchClick={handleSearchClick}
-            data={
-              searchInputValue ? filterValues(searchInputValue) : users.results
-            }
-          />
-          <div className="d-flex align-items-center justify-content-center">
-            <LoadMore isLoading={isLoading} />
-          </div>
-          <div>
-            <Pagination
-              activePage={
-                Number(urlSearchParamsHelper.getParam("page"))
-                  ? Number(urlSearchParamsHelper.getParam("page"))
-                  : 1
-              }
-              marginPagesDisplayed={2}
-              onPageChange={({ selected }) => {
-                handleLoadUserList({ page: selected + 1 });
-              }}
-              pageCount={50}
-              pageRangeDisplayed={5}
+    <ErrorContainerHandler>
+      <>
+        {users && users?.results?.length > 0 ? (
+          <>
+            <SearchInput
+              className="w-75 m-auto my-4"
+              id="searchInput"
+              onChange={(value) => setSearchInputValue(value)}
             />
-          </div>
-        </>
-      ) : (
-        <></>
-      )}
-      <Modal
-        title={<ModalTitle selectedUser={selectedUser} />}
-        onClose={() => setShow(false)}
-        show={show}
-      >
-        <ModalContent data={selectedUser} />
-      </Modal>
-    </>
+            <DashboardTable
+              handleSearchClick={handleSearchClick}
+              data={
+                searchInputValue
+                  ? filterValues(searchInputValue)
+                  : users.results
+              }
+            />
+            <div className="d-flex align-items-center justify-content-center">
+              <LoadMore isLoading={isLoading} />
+            </div>
+            <div>
+              <Pagination
+                activePage={
+                  Number(urlSearchParamsHelper.getParam("page"))
+                    ? Number(urlSearchParamsHelper.getParam("page"))
+                    : 1
+                }
+                marginPagesDisplayed={2}
+                onPageChange={({ selected }) => {
+                  handleLoadUserList({ page: selected + 1 });
+                }}
+                pageCount={50}
+                pageRangeDisplayed={5}
+              />
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+        <Modal
+          title={<ModalTitle selectedUser={selectedUser} />}
+          onClose={() => setShow(false)}
+          show={show}
+        >
+          <ModalContent data={selectedUser} />
+        </Modal>
+      </>
+    </ErrorContainerHandler>
   );
 }
