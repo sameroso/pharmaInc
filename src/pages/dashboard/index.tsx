@@ -12,6 +12,7 @@ import { DashboardTable } from "./parts/Table";
 import { Results, Users } from "types/models/user";
 import { useHistory } from "react-router";
 import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
+import { useDebounce } from "utils/hooks";
 interface ModalTitleProps {
   selectedUser: Results | undefined;
 }
@@ -40,6 +41,7 @@ function ModalTitle({ selectedUser }: ModalTitleProps) {
 export function DashBoard() {
   const [users, setUsers] = useState<Users>();
   const [searchInputValue, setSearchInputValue] = useState("");
+  const debouncedSearchInputValue = useDebounce(searchInputValue, 400);
   const [selectedUser, setSelectedUser] = useState<Results>();
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -91,7 +93,6 @@ export function DashBoard() {
         ) || `${item.nat.toLocaleLowerCase()}`.includes(value.toLowerCase())
     );
   }
-
   return (
     <ErrorModule.ErrorContainerHandler>
       <>
@@ -106,7 +107,7 @@ export function DashBoard() {
               handleSearchClick={handleSearchClick}
               data={
                 searchInputValue
-                  ? filterValues(searchInputValue)
+                  ? filterValues(debouncedSearchInputValue)
                   : users.results
               }
             />
