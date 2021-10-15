@@ -114,7 +114,7 @@ export function DashBoard() {
             <div className="d-flex align-items-center justify-content-center">
               <LoadMore isLoading={isLoading} />
             </div>
-            <div>
+            <div className="m-auto mt-3" style={{ width: "fit-content" }}>
               <Pagination
                 activePage={
                   Number(urlSearchParamsHelper.getParam("page"))
