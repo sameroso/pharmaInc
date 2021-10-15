@@ -5,18 +5,18 @@ import { tableColumns } from "./tableColumns";
 export function DashboardTable({ data, handleSearchClick }: any) {
   return (
     <Table data={data}>
-      {
-        tableColumns.map((item) => (
+      <>
+        {tableColumns.map((item) => (
           <Table.Column
             itemKey={item.field}
             key={item.field}
             field={item.field}
             modifier={item.modifier}
           >
-            {item.header}
+            <div>{item.header}</div>
           </Table.Column>
-        )) as any
-      }
+        ))}
+      </>
       <Table.Extra
         field="Ações"
         callback={(value) => {
