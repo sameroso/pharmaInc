@@ -9,7 +9,11 @@ interface Props {
 export default function SearchInput({ onChange, className, id }: Props) {
   return (
     <div className={`position-relative ${className}`}>
-      <label htmlFor={id} style={{ right: "10px", position: "absolute" }}>
+      <label
+        htmlFor={id}
+        className="position-absolute"
+        style={{ right: "10px" }}
+      >
         <FaSearch cursor="pointer" />
       </label>
       <input
