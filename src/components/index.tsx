@@ -5,6 +5,7 @@ import Pagination from "./Pagination";
 import LoadMore from "./LoadMore";
 import ErrorComponent from "./Error";
 import Header from "./Header";
+import Popup from "./Popup";
 import * as ErrorModule from "./ErrorContainerHandler";
 
 export {
@@ -15,5 +16,6 @@ export {
   LoadMore,
   ErrorComponent,
   Header,
+  Popup,
   ErrorModule,
 };
