@@ -29,7 +29,7 @@ export interface ContainerProps {
 
 export interface ExtraProps {
   /** Pass a callback function that can return anything renderable to the column */
-  callback?: (props: Record<string, unknown>) => JSX.Element;
+  callback?: (props: any) => JSX.Element;
   /** CSS class to be passed into the table head column */
   className?: string[] | string;
   itemKey: string;
