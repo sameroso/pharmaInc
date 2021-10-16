@@ -1,6 +1,23 @@
 import { MdOutlineLocalPharmacy } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { useHistory } from "react-router";
+import { Popup } from "components";
+import style from "./style.module.scss";
+
+function ProfilePopUp() {
+  return (
+    <div
+      style={{ width: "100px", right: "10px" }}
+      className={`bg-white rounded`}
+    >
+      <ul style={{ padding: "2px" }}>
+        <li style={{ listStyleType: "none" }} className={style.popup_items}>
+          Logout
+        </li>
+      </ul>
+    </div>
+  );
+}
 
 export default function Header() {
   const history = useHistory();
@@ -16,7 +33,12 @@ export default function Header() {
         <MdOutlineLocalPharmacy size="30px" color="white" />
         <h3 className="text-white mb-0">Pharma Inc.</h3>
       </div>
-      <CgProfile color="white" size="30px" cursor="pointer" />
+      <Popup
+        style={{ right: "2px", cursor: "pointer" }}
+        component={<ProfilePopUp />}
+      >
+        <CgProfile color="white" size="30px" cursor="pointer" />
+      </Popup>
     </div>
   );
 }
