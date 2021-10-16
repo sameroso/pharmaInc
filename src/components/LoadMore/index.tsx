@@ -1,5 +1,5 @@
 import { AiOutlineReload } from "react-icons/ai";
-import "./style.css";
+import style from "./style.module.scss";
 
 interface Props {
   isLoading?: boolean;
@@ -8,11 +8,15 @@ interface Props {
 export default function LoadMore({ isLoading }: Props) {
   return (
     <div
-      className="d-flex align-items-center"
-      style={{ opacity: !isLoading ? 0 : 1 }}
+      className={`d-flex align-items-center ${
+        !isLoading ? "opacity-0" : "opacity-100"
+      }`}
     >
-      <AiOutlineReload size="30px" className={!isLoading ? "" : "loading"} />
-      <h3 className={`mb-0 ${!isLoading ? "" : "loading-dots"}`}>
+      <AiOutlineReload
+        size="30px"
+        className={!isLoading ? "" : style.loading_icon}
+      />
+      <h3 className={`mb-0 ${!isLoading ? "" : style.loading_dots}`}>
         Loading More
       </h3>
     </div>
