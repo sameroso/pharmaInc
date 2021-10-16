@@ -6,7 +6,7 @@ export default function Header() {
   const history = useHistory();
   return (
     <div
-      className="py-2 bg-primary position-sticky d-flex align-items-center justify-content-between"
+      className="py-2 local_bg-primary position-sticky d-flex align-items-center justify-content-between"
       style={{
         top: 0,
         paddingLeft: "1.2rem",
