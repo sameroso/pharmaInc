@@ -11,8 +11,8 @@ interface Props {
 }
 
 const Modal = (props: Props) => {
-  const closeOnEscapeKeyDown = (e: any) => {
-    if ((e.charCode || e.keyCode) === 27) {
+  const closeOnEscapeKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
       props.onClose();
     }
   };
@@ -44,7 +44,7 @@ const Modal = (props: Props) => {
         <div className="modal-footer"></div>
       </div>
     </div>,
-    document.getElementById("modal") as HTMLElement
+    document.body as HTMLElement
   );
 };
 
