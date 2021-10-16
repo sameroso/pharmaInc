@@ -31,6 +31,7 @@ function ModalTitle({ selectedUser }: ModalTitleProps) {
           transform: "translate(-50%,-140%)",
           boxShadow: "1px 1px #888888",
           left: "50%",
+          zIndex:999
         }}
         src={selectedUser?.picture.large}
       />
@@ -125,7 +126,7 @@ export function DashBoard() {
                 onPageChange={({ selected }) => {
                   handleLoadUserList({ page: selected + 1 });
                 }}
-                pageCount={50}
+                pageCount={7}
                 pageRangeDisplayed={5}
               />
             </div>
