@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import ReactDOM from "react-dom";
-import "./style.css";
+import style from "./style.module.scss";
 import { AiOutlineClose } from "react-icons/ai";
 
 interface Props {
@@ -26,22 +26,24 @@ const Modal = (props: Props) => {
 
   return ReactDOM.createPortal(
     <div
-      className={`modal ${props.show ? "enter-done" : ""}`}
+      className={`${style.modal} ${props.show ? style.enter_done : ""}`}
       onClick={props.onClose}
     >
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div
+        className={style.modal_content}
+        onClick={(e) => e.stopPropagation()}
+      >
         <AiOutlineClose
           onClick={props.onClose}
           cursor="pointer"
           size="20px"
-          style={{ right: "0.8rem", top: "0.8rem", position: "absolute" }}
+          className={style.close_icon}
         />
 
         <div className="modal-header">
           <h4 className="modal-title w-100">{props.title}</h4>
         </div>
         <div className="modal-body">{props.children}</div>
-        <div className="modal-footer"></div>
       </div>
     </div>,
     document.body as HTMLElement
