@@ -1,6 +1,5 @@
 import ReactPaginate from "react-paginate";
-import "./style.css";
-
+import style from "./style.module.scss";
 
 interface Props {
   onPageChange: (selectedItem: { selected: number }) => void;
@@ -21,13 +20,12 @@ export default function Pagination({
       previousLabel={"prev"}
       nextLabel={"next"}
       breakLabel={"..."}
-      breakClassName={"break-me"}
       pageCount={pageCount}
       marginPagesDisplayed={marginPagesDisplayed}
       disableInitialCallback
       forcePage={activePage - 1}
-      containerClassName={"pagination"}
-      activeClassName={"active"}
+      containerClassName={style.pagination}
+      activeClassName={style.active}
       pageRangeDisplayed={pageRangeDisplayed}
       onPageChange={onPageChange}
     />
