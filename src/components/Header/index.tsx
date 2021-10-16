@@ -6,19 +6,13 @@ export default function Header() {
   const history = useHistory();
   return (
     <div
-      className="py-2 local_bg-primary position-sticky d-flex align-items-center justify-content-between"
+      className="px-4 py-2 local_bg-primary position-sticky d-flex align-items-center justify-content-between"
       style={{
         top: 0,
-        paddingLeft: "1.2rem",
-        paddingRight: "1.2rem",
-        zIndex: 1000,
+        zIndex: 9,
       }}
     >
-      <div
-        className="d-flex"
-        style={{ cursor: "pointer" }}
-        onClick={()=>history.go(0)}
-      >
+      <div className="d-flex cursor-pointer" onClick={() => history.go(0)}>
         <MdOutlineLocalPharmacy size="30px" color="white" />
         <h3 className="text-white mb-0">Pharma Inc.</h3>
       </div>
