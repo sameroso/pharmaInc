@@ -31,7 +31,7 @@ function ModalTitle({ selectedUser }: ModalTitleProps) {
           transform: "translate(-50%,-140%)",
           boxShadow: "1px 1px #888888",
           left: "50%",
-          zIndex:999
+          zIndex: 999,
         }}
         src={selectedUser?.picture.large}
       />
@@ -46,6 +46,7 @@ export function DashBoard() {
   const [selectedUser, setSelectedUser] = useState<Results>();
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [sortType, setSortType] = useState<"asc" | "desc" | "">("");
   const history = useHistory();
 
   const { useError } = ErrorModule;
@@ -73,7 +74,7 @@ export function DashBoard() {
     getUsers({ page: Number(urlSearchParamsHelper.getParam("page")) || 1 });
   }, [addError, removeError, urlSearchParamsHelper]);
 
-  function handleSearchClick(value: any) {
+  function handleSearchClick(value: Results) {
     setSelectedUser(value);
     setShow(true);
   }
@@ -87,13 +88,42 @@ export function DashBoard() {
   }
 
   function filterValues(value: string) {
-    return users?.results.filter(
-      (item) =>
-        `${item.name.first.toLocaleLowerCase()} ${item.name.last.toLocaleLowerCase()}`.includes(
-          value.toLocaleLowerCase()
-        ) || `${item.nat.toLocaleLowerCase()}`.includes(value.toLowerCase())
+    return (
+      users?.results.filter(
+        (item) =>
+          `${item.name.first.toLocaleLowerCase()} ${item.name.last.toLocaleLowerCase()}`.includes(
+            value.toLocaleLowerCase()
+          ) || `${item.nat.toLocaleLowerCase()}`.includes(value.toLowerCase())
+      ) || []
     );
   }
+
+  function sortNames(sort: "asc" | "desc" | "") {
+    return (
+      users?.results?.sort((a, b) => {
+        if (sort === "asc")
+          //sort string ascending
+          return a.name.first.localeCompare(b.name.first);
+        if (sort === "desc") return b.name.first.localeCompare(a.name.first);
+        return 0;
+      }) || []
+    );
+  }
+
+  function handleSortName(sort: "asc" | "desc" | "") {
+    if (users && users?.results?.length > 0) {
+      setUsers({
+        ...users,
+        results: sortNames(sort === "desc" || !sort ? "asc" : "desc"),
+      });
+      if (sortType === "asc") {
+        setSortType("desc");
+      } else {
+        setSortType("asc");
+      }
+    }
+  }
+
   return (
     <ErrorModule.ErrorContainerHandler>
       <>
@@ -111,6 +141,8 @@ export function DashBoard() {
                   ? filterValues(debouncedSearchInputValue)
                   : users.results
               }
+              handleSortName={handleSortName}
+              sortedType={sortType}
             />
             <div className="d-flex align-items-center justify-content-center">
               <LoadMore isLoading={isLoading} />
