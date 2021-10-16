@@ -14,6 +14,7 @@ export default function LoadMore({ isLoading }: Props) {
     >
       <AiOutlineReload
         size="30px"
+        color="var(--color-dark)"
         className={!isLoading ? "" : style.loading_icon}
       />
       <h3 className={`mb-0 ${!isLoading ? "" : style.loading_dots}`}>

@@ -10,7 +10,7 @@
 .loading_icon {
   -webkit-animation: spin 4s linear infinite;
   -moz-animation: spin 4s linear infinite;
-  animation: spin 0.3s linear infinite;
+  animation: spin 0.4s linear infinite;
 }
 @-moz-keyframes spin {
   100% {
@@ -29,24 +29,29 @@
   }
 }
 
+.loading_dots {
+  color: var(--color-dark);
+}
+
 .loading_dots:after {
-    overflow: hidden;
-    display: inline-block;
-    vertical-align: bottom;
-    -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
-    animation: ellipsis steps(4,end) 900ms infinite;
-    content: "\2026"; /* ascii code for the ellipsis character */
-    width: 0px;
+  color: var(--color-primary);
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 20px;
   }
-  
-  @keyframes ellipsis {
-    to {
-      width: 20px;    
-    }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 20px;
   }
-  
-  @-webkit-keyframes ellipsis {
-    to {
-      width: 20px;    
-    }
-  }
+}
