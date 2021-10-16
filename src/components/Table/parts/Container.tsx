@@ -186,7 +186,7 @@ function Container(props: ContainerProps) {
           <thead className="w-100">
             <tr className="w-100">{columns()}</tr>
           </thead>
-          <tbody className="w-100">{rows()}</tbody>
+          <tbody data-testid="tbody" className="w-100">{rows()}</tbody>
         </table>
       </div>
     </div>
