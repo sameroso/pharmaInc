@@ -1,0 +1,31 @@
+.local_color-primary {
+  color: var(--color-primary) !important;
+}
+.local_color-secondary {
+  color: var(--color-secondary) !important;
+}
+.local_color-light {
+  color: var(--color-light) !important;
+}
+.local_color-dark {
+  color: var(--color-dark) !important;
+}
+.local_color-error {
+  color: var(--color-error) !important;
+}
+
+.local_bg-primary {
+  background-color: var(--color-primary) !important;
+}
+.local_bg-secondary {
+  background-color: var(--color-secondary) !important;
+}
+.local_bg-light {
+  background-color: var(--color-light) !important;
+}
+.local_bg-dark {
+  background-color: var(--color-dark) !important;
+}
+.local_bg-error {
+  background-color: var(--color-error) !important;
+}
