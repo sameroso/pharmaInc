@@ -181,7 +181,7 @@ function Container(props: ContainerProps) {
 
   return (
     <div className="d-flex justify-content-center">
-      <div className="w-75">
+      <div className="w-100">
         <table className="text-center table table-hover w-100 table-bordered border ">
           <thead className="w-100">
             <tr className="w-100">{columns()}</tr>
