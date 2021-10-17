@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: app-prod
+    ports:
+      - "8084:80"
+    image: app-prod
+    build:
+      context: .
+      target: production
