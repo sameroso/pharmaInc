@@ -1,46 +1,67 @@
-# Getting Started with Create React App
+<h4 align="center">
+ Pharma Inc.
+</h4>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+  <a href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#gear-how-to-use">How To Use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#memo-license">License</a>
+</p>
 
-## Available Scripts
+## :rocket: Technologies
 
-In the project directory, you can run:
+- [ReactJS][reactjs]
+- [Typescript][typescript]
+- [React Router](https://reactrouter.com/web/guides/quick-start)
+- [SASS](https://developer.mozilla.org/pt-BR/docs/Web/CSS/@keyframes)
+- And some other packages...
 
-### `yarn start`
+## :gear: How To Use
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To clone and run this application, you'll need [Git][git], [Node.js v14.15.0][nodejs] or higher + [Yarn v1.22][yarn] or higher installed on your computer. From your command line:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+# Clone this repository
+$ git clone https://github.com/MogLuiz/Economiza-ai.git
 
-### `yarn test`
+# Go into the repository
+$ cd pharna
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Install dependencies
+$ yarn install
 
-### `yarn build`
+# Run the app
+$ yarn start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Or run with docker
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+# Clone this repository
+$ git clone https://github.com/MogLuiz/Economiza-ai.git
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Go into the repository
+$ cd pharna
 
-### `yarn eject`
+# For Development env
+$ yarn dev
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# For Production
+$ docker-compose -f docker-compose.prod.yml build
+$ docker run -p 80:80 --name react-app app-prod
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## :memo: License
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+This project is under the MIT license. See the [LICENSE](https://github.com/marcelojrfarias/githubexplorer/blob/master/LICENSE) for more information.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Made with 💗 by Samer 👋 [Get in touch!](https://www.linkedin.com/in/samer-rola-frontend/)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+[typescript]: https://www.typescriptlang.org/
+[reactjs]: https://reactjs.org/
+[SASS]: https://sass-lang.com/
+
+
