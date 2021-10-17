@@ -1,7 +1,7 @@
 /* eslint-disable jest/no-mocks-import */
 import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { ErrorModule } from "components";
+import { ErrorModule, GlobalLoaderModule } from "components";
 import { DashBoard } from "pages/dashboard";
 import { mock } from "mocks/users";
 import * as randomUser from "api/axios/randomUser";
@@ -12,11 +12,13 @@ describe("Dashboard table Table", () => {
   mocked.mockReturnValue({ data: { results: mock } } as any);
 
   render(
-    <MemoryRouter initialEntries={["?page=2"]}>
-      <ErrorModule.ErrorContainerProvider>
-        <DashBoard />
-      </ErrorModule.ErrorContainerProvider>
-    </MemoryRouter>
+    <GlobalLoaderModule.GlobalLoaderProvider>
+      <MemoryRouter initialEntries={["?page=2"]}>
+        <ErrorModule.ErrorContainerProvider>
+          <DashBoard />
+        </ErrorModule.ErrorContainerProvider>
+      </MemoryRouter>
+    </GlobalLoaderModule.GlobalLoaderProvider>
   );
 
   test("Render rows with correct data", async () => {
