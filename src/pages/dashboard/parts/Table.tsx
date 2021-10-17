@@ -19,36 +19,27 @@ interface GenderPopupProps {
 
 function GenderPopup({ handleGetByGender }: GenderPopupProps) {
   return (
-    <div
-      style={{ width: "130px", right: "10px" }}
-      className={`bg-white rounded border`}
-    >
-      <ul style={{ padding: "2px" }}>
-        <li
-          onClick={() => handleGetByGender("")}
-          style={{ listStyleType: "none" }}
-          className={style.popup_items}
-        >
+    <div className={`bg-white rounded border ${style.popup_container}`}>
+      <ul>
+        <li onClick={() => handleGetByGender("")} className={style.popup_items}>
           All
         </li>
       </ul>
-      <ul style={{ padding: "2px" }}>
+      <ul>
         <li
           onClick={() => handleGetByGender("female")}
-          style={{ listStyleType: "none" }}
           className={style.popup_items}
         >
-          <BsGenderFemale style={{ marginRight: "6px" }} cursor="pointer" />
+          <BsGenderFemale className={style.popup_list_icon} cursor="pointer" />
           Female
         </li>
       </ul>
-      <ul style={{ padding: "2px" }}>
+      <ul>
         <li
           onClick={() => handleGetByGender("male")}
-          style={{ listStyleType: "none" }}
           className={style.popup_items}
         >
-          <BsGenderMale style={{ marginRight: "6px" }} cursor="pointer" />
+          <BsGenderMale className={style.popup_list_icon} cursor="pointer" />
           Male
         </li>
       </ul>
@@ -101,21 +92,22 @@ export function DashboardTable({
         <div className="d-flex justify-content-center">
           Gender
           <Popup
-            style={{ right: "-20px", cursor: "pointer" }}
+            style={{ right: "-20px" }}
+            className="cursor-pointer"
             component={<GenderPopup handleGetByGender={handleGetByGender} />}
           >
             <>
               {!gender && (
-                <GrSort style={{ marginLeft: "10px" }} cursor="pointer" />
+                <GrSort className={style.gender_icons} cursor="pointer" />
               )}
               {gender === "female" && (
                 <BsGenderFemale
-                  style={{ marginLeft: "10px" }}
+                  className={style.gender_icons}
                   cursor="pointer"
                 />
               )}
               {gender === "male" && (
-                <BsGenderMale style={{ marginLeft: "10px" }} cursor="pointer" />
+                <BsGenderMale className={style.gender_icons} cursor="pointer" />
               )}
             </>
           </Popup>

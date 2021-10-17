@@ -1,6 +1,24 @@
+.gender_icons {
+  margin-left: 10px;
+}
 .popup_items {
   &:hover {
     color: white;
     background-color: var(--color-primary) !important;
   }
+}
+
+.popup_container {
+  width: 130px;
+  right: 10px;
+  ul {
+    padding: 2px;
+    li {
+      list-style-type: none;
+    }
+  }
+}
+
+.popup_list_icon {
+  margin-right: 6px;
 }
