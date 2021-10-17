@@ -18,6 +18,8 @@ import { useDebounce } from "utils/hooks";
 import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
 
 import { Results, Users, Genders } from "types/models/user";
+import { Sort } from "types/sort";
+
 
 import style from "./style.module.scss";
 interface ModalTitleProps {
@@ -46,7 +48,7 @@ export function DashBoard() {
   const [selectedUser, setSelectedUser] = useState<Results>();
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [sortType, setSortType] = useState<"asc" | "desc" | "">("");
+  const [sortType, setSortType] = useState<Sort>("");
   const [selectedGender, setSelectedGender] = useState<Genders>("");
 
   const { useError } = ErrorModule;
@@ -110,11 +112,10 @@ export function DashBoard() {
     );
   }
 
-  function sortNames(sort: "asc" | "desc" | "") {
+  function sortNames(sort: Sort) {
     return (
       users?.results?.sort((a, b) => {
         if (sort === "asc")
-          //sort string ascending
           return a.name.first.localeCompare(b.name.first);
         if (sort === "desc") return b.name.first.localeCompare(a.name.first);
         return 0;
@@ -122,7 +123,7 @@ export function DashBoard() {
     );
   }
 
-  function handleSortNames(sort: "asc" | "desc" | "") {
+  function handleSortNames(sort: Sort) {
     if (users && users?.results?.length > 0) {
       setUsers({
         ...users,

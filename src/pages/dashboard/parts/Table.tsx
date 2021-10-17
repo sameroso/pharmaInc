@@ -8,7 +8,8 @@ import {
 
 import { Table, Popup } from "components";
 
-import { Results ,Genders} from "types/models/user";
+import { Results, Genders } from "types/models/user";
+import { Sort } from "types/sort";
 
 import style from "./style.module.scss";
 
@@ -58,9 +59,9 @@ function GenderPopup({ handleGetByGender }: GenderPopupProps) {
 interface DashboardTableProps {
   data: Results[];
   handleSearchClick: (value: Results) => void;
-  handleSortName: (sort: "asc" | "desc" | "") => void;
+  handleSortName: (sort: Sort) => void;
   handleGetByGender: (gender: Genders) => void;
-  sortedType: "asc" | "desc" | "";
+  sortedType: Sort;
   gender: Genders;
 }
 
