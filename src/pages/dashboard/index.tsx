@@ -18,6 +18,8 @@ import { useDebounce } from "utils/hooks";
 import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
 
 import { Results, Users } from "types/models/user";
+
+import style from "./style.module.scss";
 interface ModalTitleProps {
   selectedUser: Results | undefined;
 }
@@ -30,14 +32,7 @@ function ModalTitle({ selectedUser }: ModalTitleProps) {
       </h2>
       <img
         alt="User"
-        className="rounded-circle border"
-        style={{
-          position: "absolute",
-          transform: "translate(-50%,-140%)",
-          boxShadow: "1px 1px #888888",
-          left: "50%",
-          zIndex: 999,
-        }}
+        className={`rounded-circle border position-absolute ${style.modal_title}`}
         src={selectedUser?.picture.large}
       />
     </div>
@@ -57,8 +52,8 @@ export function DashBoard() {
   );
 
   const { useError } = ErrorModule;
-  const {useGlobalLoader} = GlobalLoaderModule
-  
+  const { useGlobalLoader } = GlobalLoaderModule;
+
   const history = useHistory();
   const { addLoader, removeLoader } = useGlobalLoader();
   const { addError, removeError } = useError();
@@ -181,7 +176,7 @@ export function DashBoard() {
             <div className="d-flex align-items-center justify-content-center">
               <LoadMore isLoading={isLoading} />
             </div>
-            <div className="m-auto mt-3" style={{ width: "fit-content" }}>
+            <div className="m-auto mt-3 w-fit-content">
               <Pagination
                 activePage={
                   Number(urlSearchParamsHelper.getParam("page"))
