@@ -1,5 +1,7 @@
-import { getRandomUser, RadomUserProps } from "api/axios/randomUser";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useHistory } from "react-router";
+
+import { getRandomUser, RadomUserProps } from "api/axios/randomUser";
 import {
   Modal,
   Pagination,
@@ -8,12 +10,14 @@ import {
   ErrorModule,
   GlobalLoaderModule,
 } from "components";
+
 import { ModalContent } from "./parts/ModalContent";
 import { DashboardTable } from "./parts/Table";
-import { Results, Users } from "types/models/user";
-import { useHistory } from "react-router";
-import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
+
 import { useDebounce } from "utils/hooks";
+import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
+
+import { Results, Users } from "types/models/user";
 interface ModalTitleProps {
   selectedUser: Results | undefined;
 }
@@ -45,14 +49,18 @@ export function DashBoard() {
   const [searchInputValue, setSearchInputValue] = useState("");
   const debouncedSearchInputValue = useDebounce(searchInputValue, 400);
   const [selectedUser, setSelectedUser] = useState<Results>();
-  const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [sortType, setSortType] = useState<"asc" | "desc" | "">("");
-  const [gender, setGender] = useState<"male" | "female" | "">("");
-  const history = useHistory();
-  const { addLoader, removeLoader } = GlobalLoaderModule.useGlobalLoader();
+  const [selectedGender, setSelectedGender] = useState<"male" | "female" | "">(
+    ""
+  );
 
   const { useError } = ErrorModule;
+  const {useGlobalLoader} = GlobalLoaderModule
+  
+  const history = useHistory();
+  const { addLoader, removeLoader } = useGlobalLoader();
   const { addError, removeError } = useError();
 
   const urlSearchParamsHelper = useMemo(
@@ -78,7 +86,7 @@ export function DashBoard() {
         addError();
       }
     },
-    [addError, removeError]
+    [addError, addLoader, removeError, removeLoader]
   );
 
   useEffect(() => {
@@ -87,7 +95,7 @@ export function DashBoard() {
 
   function handleSearchClick(value: Results) {
     setSelectedUser(value);
-    setShow(true);
+    setShowModal(true);
   }
 
   function handleLoadUserList({ page }: { page: string | number }) {
@@ -136,13 +144,14 @@ export function DashBoard() {
   }
 
   async function handleGetByGender(gender: "male" | "female" | "") {
+    if (gender === selectedGender) return;
     addLoader();
     const user = await getUsers({
       gender: gender,
       page: Number(urlSearchParamsHelper.getParam("page")) || 1,
     });
     if (user) {
-      setGender(gender);
+      setSelectedGender(gender);
     }
     removeLoader();
   }
@@ -150,7 +159,7 @@ export function DashBoard() {
   return (
     <ErrorModule.ErrorContainerHandler>
       <>
-        {users && users?.results?.length > 0 ? (
+        {users && users?.results?.length > 0 && (
           <>
             <SearchInput
               className="w-75 m-auto my-4"
@@ -167,7 +176,7 @@ export function DashBoard() {
               handleSortName={handleSortNames}
               sortedType={sortType}
               handleGetByGender={handleGetByGender}
-              gender={gender}
+              gender={selectedGender}
             />
             <div className="d-flex align-items-center justify-content-center">
               <LoadMore isLoading={isLoading} />
@@ -188,13 +197,11 @@ export function DashBoard() {
               />
             </div>
           </>
-        ) : (
-          <></>
         )}
         <Modal
           title={<ModalTitle selectedUser={selectedUser} />}
-          onClose={() => setShow(false)}
-          show={show}
+          onClose={() => setShowModal(false)}
+          show={showModal}
         >
           <ModalContent data={selectedUser} />
         </Modal>
