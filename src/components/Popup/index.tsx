@@ -1,7 +1,7 @@
-import { useRef, useEffect, useState, CSSProperties } from "react";
+import { useRef, useEffect, useState, CSSProperties, Fragment } from "react";
 
 interface Props {
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element | JSX.Element[] | false;
   className?: string;
   component?: JSX.Element | JSX.Element[];
   style?: CSSProperties;
@@ -32,11 +32,20 @@ export default function Popup({
     <>
       <div
         ref={ref}
-        onClick={() => setIsOpen(true)}
+        onClick={(e) => {
+          setIsOpen(true);
+        }}
         className="position-relative"
       >
         {children}
-        <div style={style} className={`position-absolute ${className}`}>
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpen(false);
+          }}
+          style={style}
+          className={`position-absolute ${className}`}
+        >
           {isOpen ? component : <></>}
         </div>
       </div>

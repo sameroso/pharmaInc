@@ -1,17 +1,64 @@
-import { Table } from "components";
+import { Table, Popup } from "components";
 import { BsSearch } from "react-icons/bs";
 import { GrSort } from "react-icons/gr";
 import {
   AiOutlineSortAscending,
   AiOutlineSortDescending,
 } from "react-icons/ai";
+import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
 import { Results } from "types/models/user";
+import style from "./style.module.scss";
 
-interface Props {
+interface GenderPopupProps {
+  handleGetByGender: (gender: "male" | "female" | "") => void;
+}
+
+function GenderPopup({ handleGetByGender }: GenderPopupProps) {
+  return (
+    <div
+      style={{ width: "130px", right: "10px" }}
+      className={`bg-white rounded border`}
+    >
+      <ul style={{ padding: "2px" }}>
+        <li
+          onClick={() => handleGetByGender("")}
+          style={{ listStyleType: "none" }}
+          className={style.popup_items}
+        >
+          All
+        </li>
+      </ul>
+      <ul style={{ padding: "2px" }}>
+        <li
+          onClick={() => handleGetByGender("female")}
+          style={{ listStyleType: "none" }}
+          className={style.popup_items}
+        >
+          <BsGenderFemale style={{ marginRight: "6px" }} cursor="pointer" />
+          Female
+        </li>
+      </ul>
+      <ul style={{ padding: "2px" }}>
+        <li
+          onClick={() => handleGetByGender("male")}
+          style={{ listStyleType: "none" }}
+          className={style.popup_items}
+        >
+          <BsGenderMale style={{ marginRight: "6px" }} cursor="pointer" />
+          Male
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+interface DashboardTableProps {
   data: Results[];
   handleSearchClick: (value: Results) => void;
   handleSortName: (sort: "asc" | "desc" | "") => void;
+  handleGetByGender: (gender: "male" | "female" | "") => void;
   sortedType: "asc" | "desc" | "";
+  gender: "male" | "female" | "";
 }
 
 export function DashboardTable({
@@ -19,7 +66,9 @@ export function DashboardTable({
   handleSearchClick,
   handleSortName,
   sortedType,
-}: Props) {
+  handleGetByGender,
+  gender,
+}: DashboardTableProps) {
   return (
     <Table data={data}>
       <Table.Column
@@ -31,11 +80,13 @@ export function DashboardTable({
           Name
           {sortedType === "asc" || !sortedType ? (
             <AiOutlineSortAscending
+              style={{ marginLeft: "10px" }}
               onClick={() => handleSortName(sortedType)}
               cursor="pointer"
             />
           ) : (
             <AiOutlineSortDescending
+              style={{ marginLeft: "10px" }}
               onClick={() => handleSortName(sortedType)}
               cursor="pointer"
             />
@@ -43,9 +94,27 @@ export function DashboardTable({
         </div>
       </Table.Column>
       <Table.Column itemKey="gender" field="gender">
-        <div>
+        <div className="d-flex justify-content-center">
           Gender
-          <GrSort style={{ marginLeft: "10px" }} cursor="pointer" />
+          <Popup
+            style={{ right: "-20px", cursor: "pointer" }}
+            component={<GenderPopup handleGetByGender={handleGetByGender} />}
+          >
+            <>
+              {!gender && (
+                <GrSort style={{ marginLeft: "10px" }} cursor="pointer" />
+              )}
+              {gender === "female" && (
+                <BsGenderFemale
+                  style={{ marginLeft: "10px" }}
+                  cursor="pointer"
+                />
+              )}
+              {gender === "male" && (
+                <BsGenderMale style={{ marginLeft: "10px" }} cursor="pointer" />
+              )}
+            </>
+          </Popup>
         </div>
       </Table.Column>
       <Table.Column

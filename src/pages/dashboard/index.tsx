@@ -1,5 +1,5 @@
 import { getRandomUser, RadomUserProps } from "api/axios/randomUser";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Modal,
   Pagination,
@@ -47,6 +47,7 @@ export function DashBoard() {
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [sortType, setSortType] = useState<"asc" | "desc" | "">("");
+  const [gender, setGender] = useState<"male" | "female" | "">("");
   const history = useHistory();
 
   const { useError } = ErrorModule;
@@ -58,21 +59,26 @@ export function DashBoard() {
     [history.location.search]
   );
 
-  useEffect(() => {
-    async function getUsers({ gender, page }: RadomUserProps) {
+  const getUsers = useCallback(
+    async ({ gender, page }: RadomUserProps) => {
       try {
         setIsLoading(true);
         const response = await getRandomUser({ gender, page });
         setIsLoading(false);
         removeError();
         setUsers(response.data);
+        return true;
       } catch (error) {
         setIsLoading(false);
         addError();
       }
-    }
+    },
+    [addError, removeError]
+  );
+
+  useEffect(() => {
     getUsers({ page: Number(urlSearchParamsHelper.getParam("page")) || 1 });
-  }, [addError, removeError, urlSearchParamsHelper]);
+  }, [addError, getUsers, removeError, urlSearchParamsHelper]);
 
   function handleSearchClick(value: Results) {
     setSelectedUser(value);
@@ -124,6 +130,16 @@ export function DashBoard() {
     }
   }
 
+  async function handleGetByGender(gender: "male" | "female" | "") {
+    const user = await getUsers({
+      gender: gender,
+      page: Number(urlSearchParamsHelper.getParam("page")) || 1,
+    });
+    if (user) {
+      setGender(gender);
+    }
+  }
+
   return (
     <ErrorModule.ErrorContainerHandler>
       <>
@@ -143,6 +159,8 @@ export function DashBoard() {
               }
               handleSortName={handleSortNames}
               sortedType={sortType}
+              handleGetByGender={handleGetByGender}
+              gender={gender}
             />
             <div className="d-flex align-items-center justify-content-center">
               <LoadMore isLoading={isLoading} />

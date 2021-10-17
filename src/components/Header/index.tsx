@@ -8,9 +8,9 @@ function ProfilePopUp() {
   return (
     <div
       style={{ width: "100px", right: "10px" }}
-      className={`bg-white rounded`}
+      className={`bg-white rounded border`}
     >
-      <ul style={{ padding: "2px" }}>
+      <ul style={{ padding: "2px" }} className="mb-0">
         <li style={{ listStyleType: "none" }} className={style.popup_items}>
           Logout
         </li>
