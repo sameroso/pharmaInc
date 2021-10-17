@@ -18,7 +18,7 @@
 - [ReactJS][reactjs]
 - [Typescript][typescript]
 - [React Router Dom](https://reactrouter.com/web/guides/quick-start)
-- [SASS](https://developer.mozilla.org/pt-BR/docs/Web/CSS/@keyframes)
+- [SASS](https://sass-lang.com/)
 - And some other packages...
 
 ## :gear: How To Use
@@ -56,9 +56,7 @@ $ docker-compose -f docker-compose.prod.yml build
 $ docker run -p 8084:80 --name react-app app-prod
 ```
 
-## :memo: License
 
-This project is under the MIT license. See the [LICENSE](https://github.com/marcelojrfarias/githubexplorer/blob/master/LICENSE) for more information.
 
 ---
 
