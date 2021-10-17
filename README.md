@@ -1,6 +1,6 @@
-<h2 align="center">
+<h1 align="center">
  Pharma Inc.
-</h2>
+</h1>
 
 <p align="center">
   <a href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
