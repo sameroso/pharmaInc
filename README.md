@@ -1,18 +1,24 @@
-<h4 align="center">
+<h2 align="center">
  Pharma Inc.
-</h4>
+</h2>
 
 <p align="center">
   <a href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+   <a href="#memo-how-to-use">Description</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#gear-how-to-use">How To Use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
 </p>
+
+## :memo: Description
+- A simple app made to visualize patients data and show their details 
+
+## :gear: How To Use
 
 ## :rocket: Technologies
 
 - [ReactJS][reactjs]
 - [Typescript][typescript]
-- [React Router](https://reactrouter.com/web/guides/quick-start)
+- [React Router Dom](https://reactrouter.com/web/guides/quick-start)
 - [SASS](https://developer.mozilla.org/pt-BR/docs/Web/CSS/@keyframes)
 - And some other packages...
 
@@ -22,7 +28,7 @@ To clone and run this application, you'll need [Git][git], [Node.js v14.15.0][no
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/MogLuiz/Economiza-ai.git
+$ git clone https://github.com/sameroso/pharmaInc.git
 
 # Go into the repository
 $ cd pharna
@@ -38,17 +44,17 @@ Or run with docker
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/MogLuiz/Economiza-ai.git
+$ git clone https://github.com/sameroso/pharmaInc.git
 
 # Go into the repository
 $ cd pharna
 
-# For Development env
+# For Development Mode
 $ yarn dev
 
-# For Production
+# For Production Mode
 $ docker-compose -f docker-compose.prod.yml build
-$ docker run -p 80:80 --name react-app app-prod
+$ docker run -p 8084:80 --name react-app app-prod
 ```
 
 
