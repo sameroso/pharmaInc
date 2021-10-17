@@ -6,6 +6,7 @@ import {
   SearchInput,
   LoadMore,
   ErrorModule,
+  GlobalLoaderModule,
 } from "components";
 import { ModalContent } from "./parts/ModalContent";
 import { DashboardTable } from "./parts/Table";
@@ -49,6 +50,7 @@ export function DashBoard() {
   const [sortType, setSortType] = useState<"asc" | "desc" | "">("");
   const [gender, setGender] = useState<"male" | "female" | "">("");
   const history = useHistory();
+  const { addLoader, removeLoader } = GlobalLoaderModule.useGlobalLoader();
 
   const { useError } = ErrorModule;
   const { addError, removeError } = useError();
@@ -62,13 +64,16 @@ export function DashBoard() {
   const getUsers = useCallback(
     async ({ gender, page }: RadomUserProps) => {
       try {
+        addLoader();
         setIsLoading(true);
         const response = await getRandomUser({ gender, page });
         setIsLoading(false);
         removeError();
         setUsers(response.data);
+        removeLoader();
         return true;
       } catch (error) {
+        removeLoader();
         setIsLoading(false);
         addError();
       }
@@ -131,6 +136,7 @@ export function DashBoard() {
   }
 
   async function handleGetByGender(gender: "male" | "female" | "") {
+    addLoader();
     const user = await getUsers({
       gender: gender,
       page: Number(urlSearchParamsHelper.getParam("page")) || 1,
@@ -138,6 +144,7 @@ export function DashBoard() {
     if (user) {
       setGender(gender);
     }
+    removeLoader();
   }
 
   return (

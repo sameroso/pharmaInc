@@ -6,6 +6,7 @@ import LoadMore from "./LoadMore";
 import ErrorComponent from "./Error";
 import Header from "./Header";
 import Popup from "./Popup";
+import * as GlobalLoaderModule from "./GlobalLoader";
 import * as ErrorModule from "./ErrorContainerHandler";
 
 export {
@@ -17,5 +18,6 @@ export {
   ErrorComponent,
   Header,
   Popup,
+  GlobalLoaderModule,
   ErrorModule,
 };
