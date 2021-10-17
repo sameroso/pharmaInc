@@ -1,7 +1,9 @@
-import { useEffect } from "react";
 import ReactDOM from "react-dom";
-import style from "./style.module.scss";
+import { useEffect } from "react";
+
 import { AiOutlineClose } from "react-icons/ai";
+
+import style from "./style.module.scss";
 
 interface Props {
   onClose: () => void;

@@ -1,4 +1,5 @@
 import ReactPaginate from "react-paginate";
+
 import style from "./style.module.scss";
 
 interface Props {

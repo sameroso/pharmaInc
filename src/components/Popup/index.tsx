@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, CSSProperties, Fragment } from "react";
+import { useRef, useEffect, useState, CSSProperties } from "react";
 
 interface Props {
   children: JSX.Element | JSX.Element[] | false;

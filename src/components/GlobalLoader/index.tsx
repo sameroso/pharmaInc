@@ -1,5 +1,7 @@
 import { useContext, createContext, useState, useCallback } from "react";
+
 import { RiLoader4Line } from "react-icons/ri";
+
 import style from "./style.module.scss";
 
 interface IGlobalLoaderContext {

@@ -1,6 +1,7 @@
+import { useHistory } from "react-router-dom";
+
 import errorIcon from "assets/img/error.png";
 
-import { useHistory } from "react-router-dom";
 
 export default function ErrorComponent() {
   const history = useHistory();

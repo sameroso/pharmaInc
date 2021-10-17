@@ -1,4 +1,5 @@
 import { AiOutlineReload } from "react-icons/ai";
+
 import style from "./style.module.scss";
 
 interface Props {

@@ -1,6 +1,21 @@
+.popup_container {
+  width: 100px;
+  right: 10px;
+  ul {
+    padding: 2px;
+    li {
+      list-style-type: none;
+    }
+  }
+}
 .popup_items {
   &:hover {
     color: white;
     background-color: var(--color-primary) !important;
   }
+}
+
+.header_container {
+  top: 0;
+  z-index: 9;
 }
