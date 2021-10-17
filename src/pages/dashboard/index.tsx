@@ -110,7 +110,7 @@ export function DashBoard() {
     );
   }
 
-  function handleSortName(sort: "asc" | "desc" | "") {
+  function handleSortNames(sort: "asc" | "desc" | "") {
     if (users && users?.results?.length > 0) {
       setUsers({
         ...users,
@@ -141,7 +141,7 @@ export function DashBoard() {
                   ? filterValues(debouncedSearchInputValue)
                   : users.results
               }
-              handleSortName={handleSortName}
+              handleSortName={handleSortNames}
               sortedType={sortType}
             />
             <div className="d-flex align-items-center justify-content-center">
