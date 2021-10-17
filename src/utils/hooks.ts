@@ -1,4 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useHistory } from "react-router-dom";
+
+import { localStorageFactory, LocalStorageTypes, Login } from "./localStorage";
+
 export function useDebounce<T>(value: T, delay: number) {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -13,4 +17,26 @@ export function useDebounce<T>(value: T, delay: number) {
   }, [delay, value]);
 
   return debouncedValue;
+}
+
+export function useAuth<T>() {
+  const { addItem, removeItem, getItem } = localStorageFactory<Login>(
+    LocalStorageTypes.login
+  );
+
+  const history = useHistory();
+
+  const logout = useCallback(() => {
+    removeItem("userGoogleData");
+    history.push("/");
+  }, []);
+
+  const login = useCallback((data: any) => {
+    addItem({ userGoogleData: data });
+    history.push("/dashboard");
+  }, []);
+
+  const loginObj = getItem("userGoogleData");
+
+  return { login, logout, loginObj };
 }
