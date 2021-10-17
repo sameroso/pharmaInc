@@ -1,18 +1,17 @@
-<h2 align="center">
+<h1 align="center">
  Pharma Inc.
-</h2>
+</h1>
 
 <p align="center">
   <a href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-   <a href="#memo-how-to-use">Description</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+   <a href="#memo-description">Description</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#gear-how-to-use">How To Use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
 </p>
 
 ## :memo: Description
-- A simple app made to visualize patients data and show their details 
 
-## :gear: How To Use
+- A simple app made to visualize patients data and show their details
 
 ## :rocket: Technologies
 
@@ -57,7 +56,6 @@ $ docker-compose -f docker-compose.prod.yml build
 $ docker run -p 8084:80 --name react-app app-prod
 ```
 
-
 ## :memo: License
 
 This project is under the MIT license. See the [LICENSE](https://github.com/marcelojrfarias/githubexplorer/blob/master/LICENSE) for more information.
@@ -68,6 +66,4 @@ Made with 💗 by Samer 👋 [Get in touch!](https://www.linkedin.com/in/samer-r
 
 [typescript]: https://www.typescriptlang.org/
 [reactjs]: https://reactjs.org/
-[SASS]: https://sass-lang.com/
-
-
+[sass]: https://sass-lang.com/
