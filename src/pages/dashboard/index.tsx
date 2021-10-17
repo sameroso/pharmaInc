@@ -1,5 +1,7 @@
-import { getRandomUser, RadomUserProps } from "api/axios/randomUser";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useHistory } from "react-router";
+
+import { getRandomUser, RadomUserProps } from "api/axios/randomUser";
 import {
   Modal,
   Pagination,
@@ -8,12 +10,14 @@ import {
   ErrorModule,
   GlobalLoaderModule,
 } from "components";
+
 import { ModalContent } from "./parts/ModalContent";
 import { DashboardTable } from "./parts/Table";
-import { Results, Users } from "types/models/user";
-import { useHistory } from "react-router";
-import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
+
 import { useDebounce } from "utils/hooks";
+import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
+
+import { Results, Users } from "types/models/user";
 interface ModalTitleProps {
   selectedUser: Results | undefined;
 }
@@ -48,11 +52,15 @@ export function DashBoard() {
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [sortType, setSortType] = useState<"asc" | "desc" | "">("");
-  const [gender, setGender] = useState<"male" | "female" | "">("");
-  const history = useHistory();
-  const { addLoader, removeLoader } = GlobalLoaderModule.useGlobalLoader();
+  const [selectedGender, setSelectedGender] = useState<"male" | "female" | "">(
+    ""
+  );
 
   const { useError } = ErrorModule;
+  const {useGlobalLoader} = GlobalLoaderModule
+  
+  const history = useHistory();
+  const { addLoader, removeLoader } = useGlobalLoader();
   const { addError, removeError } = useError();
 
   const urlSearchParamsHelper = useMemo(
@@ -78,7 +86,7 @@ export function DashBoard() {
         addError();
       }
     },
-    [addError, removeError]
+    [addError, addLoader, removeError, removeLoader]
   );
 
   useEffect(() => {
@@ -136,13 +144,14 @@ export function DashBoard() {
   }
 
   async function handleGetByGender(gender: "male" | "female" | "") {
+    if (gender === selectedGender) return;
     addLoader();
     const user = await getUsers({
       gender: gender,
       page: Number(urlSearchParamsHelper.getParam("page")) || 1,
     });
     if (user) {
-      setGender(gender);
+      setSelectedGender(gender);
     }
     removeLoader();
   }
@@ -167,7 +176,7 @@ export function DashBoard() {
               handleSortName={handleSortNames}
               sortedType={sortType}
               handleGetByGender={handleGetByGender}
-              gender={gender}
+              gender={selectedGender}
             />
             <div className="d-flex align-items-center justify-content-center">
               <LoadMore isLoading={isLoading} />
