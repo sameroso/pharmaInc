@@ -1,16 +1,19 @@
-import { Table, Popup } from "components";
 import { BsSearch } from "react-icons/bs";
 import { GrSort } from "react-icons/gr";
+import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
 import {
   AiOutlineSortAscending,
   AiOutlineSortDescending,
 } from "react-icons/ai";
-import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
-import { Results } from "types/models/user";
+
+import { Table, Popup } from "components";
+
+import { Results ,Genders} from "types/models/user";
+
 import style from "./style.module.scss";
 
 interface GenderPopupProps {
-  handleGetByGender: (gender: "male" | "female" | "") => void;
+  handleGetByGender: (gender: Genders) => void;
 }
 
 function GenderPopup({ handleGetByGender }: GenderPopupProps) {
@@ -56,9 +59,9 @@ interface DashboardTableProps {
   data: Results[];
   handleSearchClick: (value: Results) => void;
   handleSortName: (sort: "asc" | "desc" | "") => void;
-  handleGetByGender: (gender: "male" | "female" | "") => void;
+  handleGetByGender: (gender: Genders) => void;
   sortedType: "asc" | "desc" | "";
-  gender: "male" | "female" | "";
+  gender: Genders;
 }
 
 export function DashboardTable({
@@ -128,7 +131,7 @@ export function DashboardTable({
       </Table.Column>
 
       <Table.Extra
-        field="Ações"
+        field="Actions"
         callback={(value: Results) => {
           return (
             <div>

@@ -17,7 +17,7 @@ import { DashboardTable } from "./parts/Table";
 import { useDebounce } from "utils/hooks";
 import { UrlSearchParamsHelper } from "utils/urlSearchParamsHelper";
 
-import { Results, Users } from "types/models/user";
+import { Results, Users, Genders } from "types/models/user";
 
 import style from "./style.module.scss";
 interface ModalTitleProps {
@@ -47,9 +47,7 @@ export function DashBoard() {
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [sortType, setSortType] = useState<"asc" | "desc" | "">("");
-  const [selectedGender, setSelectedGender] = useState<"male" | "female" | "">(
-    ""
-  );
+  const [selectedGender, setSelectedGender] = useState<Genders>("");
 
   const { useError } = ErrorModule;
   const { useGlobalLoader } = GlobalLoaderModule;
@@ -138,7 +136,7 @@ export function DashBoard() {
     }
   }
 
-  async function handleGetByGender(gender: "male" | "female" | "") {
+  async function handleGetByGender(gender: Genders) {
     if (gender === selectedGender) return;
     addLoader();
     const user = await getUsers({

@@ -1,6 +1,8 @@
+export type Genders = "male" | "female" | "";
+
 export interface Users {
   info: Info;
-  results:Results[]
+  results: Results[];
 }
 
 export interface Info {
@@ -10,7 +12,7 @@ export interface Info {
 }
 
 export interface Results {
-  gender: string;
+  gender: Genders;
   name: {
     title: string;
     first: string;
@@ -18,13 +20,13 @@ export interface Results {
   };
   location: {
     street: {
-      number: number
+      number: number;
       name: string;
     };
     city: string;
     state: string;
     country: string;
-    postcode: number
+    postcode: number;
     coordinates: {
       latitude: string;
       longitude: string;
