@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -19,7 +20,7 @@ export function useDebounce<T>(value: T, delay: number) {
   return debouncedValue;
 }
 
-export function useAuth<T>() {
+export function useAuth() {
   const { addItem, removeItem, getItem } = localStorageFactory<Login>(
     LocalStorageTypes.login
   );
